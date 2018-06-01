@@ -1,0 +1,30 @@
+---
+
+- name: download jenkins repo
+  get_url:
+    url: "{{jenkins.repo_url}}"
+    dest: /etc/yum.repos.d/jenkins.repo
+
+- name: import gpg key
+  rpm_key:
+    state: present
+    key: "{{jenkins.gpg_key}}"
+
+- name: install jenkins
+  yum:
+    name: jenkins
+    state: present
+
+- name: change java options
+  lineinfile:
+    dest=/etc/sysconfig/jenkins
+    regexp=^JENKINS_JAVA_OPTIONS=
+    line=JENKINS_JAVA_OPTIONS="{{jenkins.java_options}}"
+
+- name: start jenkins, enable on boot
+  service:
+     name: jenkins
+     state: started
+     enabled: yes
+
+- import_tasks: plugins.yml

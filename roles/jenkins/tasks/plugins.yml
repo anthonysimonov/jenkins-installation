@@ -1,0 +1,14 @@
+---
+
+- name: install plugin
+  jenkins_plugin:
+    name: "{{ item }}"
+    url_username: admin
+    url_password: admin
+    url: http://localhost:8080
+  with_items:
+    - build-pipeline-plugin
+    - docker-plugin
+    - dcoker-slave
+    - sonar
+  notify: restart jenkins

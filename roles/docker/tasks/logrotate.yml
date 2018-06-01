@@ -1,0 +1,6 @@
+---
+
+- name: enable logrotate
+  template:
+    src: docker-container
+    dest:  /etc/logrotate.d/

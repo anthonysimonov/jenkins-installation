@@ -1,0 +1,10 @@
+---
+
+- hosts: localhost
+  become: true
+  roles:
+    - git
+    - java
+    - jenkins
+    - docker
+    - docker-compose

@@ -1,0 +1,23 @@
+---
+
+- name: download installation script
+  get_url:
+    url: "{{docker.script_url}}"
+    dest: /home/docker_install.sh 
+    mode: 0777   
+
+- name: install docker
+  command: /home/docker_install.sh
+
+- name: start docker and enable on boot
+  service:
+    name: docker
+    state: started
+
+- name: delete script after installation
+  file:
+    state: absent
+    path: "/docker_install.sh"
+       
+
+- import_tasks: logrotate.yml
